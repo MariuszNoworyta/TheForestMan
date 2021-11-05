@@ -5,27 +5,44 @@ using UnityEngine;
 public class HeroController : MonoBehaviour {
 
     const string PARAMSPEED = "speed";
+    const float SPEED = 1.5f; 
+
 
     Animator anim;
+    Rigidbody rigidbody3D;
+    bool dirForward = true;
+
+
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        rigidbody3D = GetComponent<Rigidbody>();
+
+    }
+
+    // Update is called once per frame
+    void Update() {
         float horizonMove = Input.GetAxis("Horizontal");
+        rigidbody3D.velocity = new Vector3(horizonMove * SPEED, rigidbody3D.velocity.y);
+
         anim.SetFloat(PARAMSPEED, Mathf.Abs(horizonMove));
-        Vector3 heroScale = this.transform.localScale;
-        if (horizonMove < 0 && heroScale.x > 0)
+
+
+        if ((horizonMove < 0 && dirForward)|| (horizonMove > 0 && !dirForward))
         {
-            heroScale.x *= -1.0f;
-            this.transform.localScale = heroScale;
+            FilpX();
         }
-        else if (horizonMove > 0 && heroScale.x < 0)
-        {
-            heroScale.x *= -1.0f;
-            this.transform.localScale = heroScale;
-        }
+
+
+
+
 	}
+
+    private void FilpX()
+    {
+        Vector3 heroScale = this.transform.localScale;
+        heroScale.x *= -1.0f;
+        this.transform.localScale = heroScale;
+        dirForward = heroScale.x > 0;
+    }
 }
