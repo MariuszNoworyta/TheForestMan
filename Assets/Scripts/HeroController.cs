@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class HeroController : MonoBehaviour {
 
-    const string PARAMSPEED = "speed";
-    const float SPEED = 1.5f; 
+    const string SPEEDPARAMNAME = "speed";
+
+    const string JUMPPARAMNAME = "jump";
+
+
+    public float speedHero;
+    public float jumpForceHero;
+    public Transform groundTester;
+    public LayerMask layerToTest;
 
 
     Animator anim;
     Rigidbody rigidbody3D;
     bool dirForward = true;
+    bool onGround;
+    private float groundTesterRadius = 0.5f;
 
 
 	// Use this for initialization
@@ -22,12 +31,20 @@ public class HeroController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+
+        //jump
+         Collider[] groudCollision = Physics.OverlapSphere(groundTester.position, groundTesterRadius, layerToTest);
+        if (Input.GetKeyDown(KeyCode.UpArrow) && groudCollision.Length>0)
+        {
+            rigidbody3D.AddForce(new Vector3(0f, jumpForceHero));
+            anim.SetTrigger(JUMPPARAMNAME);
+        }
+
+        //move right or left
         float horizonMove = Input.GetAxis("Horizontal");
-        rigidbody3D.velocity = new Vector3(horizonMove * SPEED, rigidbody3D.velocity.y);
-
-        anim.SetFloat(PARAMSPEED, Mathf.Abs(horizonMove));
-
-
+        rigidbody3D.velocity = new Vector3(horizonMove * speedHero, rigidbody3D.velocity.y);
+        anim.SetFloat(SPEEDPARAMNAME, Mathf.Abs(horizonMove));
         if ((horizonMove < 0 && dirForward)|| (horizonMove > 0 && !dirForward))
         {
             FilpX();

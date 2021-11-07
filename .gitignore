@@ -1,3 +1,7 @@
 \!Images
 .vs
 Temp
+bin
+Library/ShaderCache
+Library/metadata
+Library/shadercompiler-*
