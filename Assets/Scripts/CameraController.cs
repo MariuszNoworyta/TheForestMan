@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour {
 	void Update () {
 
 
-        Vector3 cameraFollowHeroNew = new Vector3(hero.transform.position.x, hero.transform.position.y+ offsetYCamera, this.transform.position.z);
+        Vector3 cameraFollowHeroNew = new Vector3(hero.transform.position.x, (hero.transform.position.y+ offsetYCamera )*1.2f, this.transform.position.z);
 
         this.transform.position = Vector3.SmoothDamp(this.transform.position, cameraFollowHeroNew, ref currentVelocity, smoothCameraFollowMove);
 

@@ -222,6 +222,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\HeroController.cs" />
+    <Compile Include="Assets\Scripts\RespawnController.cs" />
+    <Compile Include="Assets\Scripts\RosiczkaController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
